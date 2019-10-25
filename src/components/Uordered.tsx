@@ -1,21 +1,22 @@
 import React from 'react';
+interface UNORED {
+    delet(i:number): void;
+    uordered:string[];
+}
 
-class Uordered extends  React.Component<any, any>{
-  render(){
-      const {uordered, delet } =this.props
-    const listing = uordered.map((item:any, i:any)=>(
-        <div key={i} className="list_uordered">
+const Uordered=(props:UNORED)=>{
+    const {uordered, delet } =props
+    const listing = uordered.map((item:string, i:number)=>(
+        <li key={i} className="listUnordered">
             <button onClick={()=>delet(i)} className="deleteButton">delete</button>
-              {item}
-        </div>
-      ))
+             {item}
+        </li>
+    ))
     return (
-      <div className = "uordered">
-          {listing}
-      </div>
+        <ul className = "unordered">
+            {listing}
+        </ul>
     )
-  }
-
 }
 
 export default Uordered;

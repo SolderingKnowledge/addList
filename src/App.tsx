@@ -3,13 +3,13 @@ import './App.css';
 import  Option  from "./components/Option"
 import  Uordered  from "./components/Uordered"
 
-interface IFace {
+interface INTER {
   list: string[];
   select:string;
   uordered:string[];
 }
-class App extends  React.Component<{}, IFace>{
-  constructor(props:IFace){
+class App extends  React.Component<{}, INTER>{
+  constructor(props:INTER){
     super(props);
     this.state = {
       list: ["First", "Second", "Third", "Fourth"],
@@ -27,7 +27,7 @@ add=(value:string)=>{
     uordered: [...this.state.uordered, value]
   })
 }
-delete =(value:any)=>{
+delete =(value:number)=>{
    const {uordered} =this.state;
    const selct = uordered.slice(0,value).concat(uordered.slice(value+1))
   this.setState({
@@ -35,11 +35,14 @@ delete =(value:any)=>{
   })
 }
   render(){
+    const { uordered, list , select} = this.state;
+    const listContent = !uordered.length ? <div className="emptyContainer"></div>: <Uordered uordered={uordered} delet={this.delete} />
+    const addToListCN = select.length ? 'addButton' : 'addButton disabled';
     return (
       <div>
-        <Option list = {this.state.list}  change={this.change} value={this.state.select } select={this.state.select} />
-        <button  disabled={!this.state.select.length} onClick={()=>this.add(this.state.select)} className="addButton">Add to List</button>
-        <Uordered uordered={this.state.uordered} delet={this.delete}/>
+        <Option list = {list}  change={this.change} value={select } select={select} />
+        <button className={addToListCN}  disabled={!select.length} onClick={()=>this.add(select)}>Add to List</button>
+        { listContent }
       </div>
     )
   }
